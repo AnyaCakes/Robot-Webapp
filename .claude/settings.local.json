@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(run)",
+      "Bash(npx --yes playwright --version)",
+      "Bash(node -e \"require.resolve\\('playwright'\\)\")",
+      "Bash(npm run *)"
+    ]
+  }
+}
