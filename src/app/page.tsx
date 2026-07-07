@@ -42,6 +42,33 @@ export default function SelectorPage() {
 
       <section className="flex flex-col gap-8">
         <div>
+          <h2 className="text-xl font-semibold">General Projects</h2>
+          <p className="text-gray-600">
+            Standalone Arduino projects that aren&apos;t part of the robot
+            car.
+          </p>
+        </div>
+
+        <ItemSelector
+          legend="Project"
+          fieldName="project"
+          items={generalProjects}
+          selectedId={projectId}
+          onSelect={setProjectId}
+        />
+
+        <button
+          type="button"
+          disabled={!projectId}
+          onClick={handleGenerateGeneralProject}
+          className="self-start bg-blue-600 text-white rounded px-4 py-2 disabled:bg-gray-300 disabled:cursor-not-allowed"
+        >
+          Generate Code
+        </button>
+      </section>
+
+      <section className="flex flex-col gap-8 border-t border-gray-200 pt-8">
+        <div>
           <h2 className="text-xl font-semibold">Robot Car</h2>
           <p className="text-gray-600">
             Pick a sensor and a behavior for your robot.
@@ -75,33 +102,6 @@ export default function SelectorPage() {
           type="button"
           disabled={!template}
           onClick={handleGenerateRobotCar}
-          className="self-start bg-blue-600 text-white rounded px-4 py-2 disabled:bg-gray-300 disabled:cursor-not-allowed"
-        >
-          Generate Code
-        </button>
-      </section>
-
-      <section className="flex flex-col gap-8 border-t border-gray-200 pt-8">
-        <div>
-          <h2 className="text-xl font-semibold">General Projects</h2>
-          <p className="text-gray-600">
-            Standalone Arduino projects that aren&apos;t part of the robot
-            car.
-          </p>
-        </div>
-
-        <ItemSelector
-          legend="Project"
-          fieldName="project"
-          items={generalProjects}
-          selectedId={projectId}
-          onSelect={setProjectId}
-        />
-
-        <button
-          type="button"
-          disabled={!projectId}
-          onClick={handleGenerateGeneralProject}
           className="self-start bg-blue-600 text-white rounded px-4 py-2 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           Generate Code
