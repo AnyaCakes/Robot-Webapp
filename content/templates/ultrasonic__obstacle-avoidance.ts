@@ -5,7 +5,7 @@ export const ultrasonicObstacleAvoidance: CodeTemplate = {
   sensorId: "ultrasonic",
   behaviorId: "obstacle-avoidance",
   explanation:
-    "The ultrasonic sensor pings the same way a bat uses sound to find objects in the dark. Every loop, the robot measures the distance to whatever is in front of it. If that distance is smaller than the stop distance you chose, the robot stops, backs off briefly, and turns before driving forward again. Otherwise it just keeps driving forward at the motor speed you chose. The robot's two left motors always spin together and its two right motors always spin together, so the code only needs to control one L298N output per side: an IN1/IN2-style pair of pins sets which way that side spins, and the matching ENA/ENB pin sets how fast.",
+    "The ultrasonic sensor pings the same way a bat uses sound to find objects in the dark. Every loop, the robot measures the distance to whatever is in front of it. If that distance is smaller than the stop distance you chose, the robot stops, backs off briefly, and turns before driving forward again. Otherwise it just keeps driving forward at the motor speed you chose. The robot's two left motors always spin together and its two right motors always spin together, so the code only needs to control one L298N output per side: an IN1/IN2-style pair of pins sets which way that side spins, and the matching ENA/ENB pin sets how fast. Whenever the robot starts moving from a stop, it ramps each side's speed up a step at a time instead of jumping straight to full speed - the same trick the Motor Sweep Test uses. Jumping straight to full power makes both motors demand their biggest current draw (to overcome standing friction) in the same instant, which can sag the power supply just enough that one side never gets moving even though it spins fine on its own - ramping the speed up spreads that demand out instead.",
   parameters: [
     {
       id: "motorSpeed",
@@ -52,6 +52,16 @@ const int rightBackwardPin = 13; // IN4
 const int motorSpeed = {{motorSpeed}};   // 0-255
 const int stopDistance = {{stopDistance}}; // centimeters
 
+// Jumping straight to full speed makes both motors demand their biggest
+// current draw (to overcome standing friction) in the same instant, which
+// can sag the power supply enough that one side never gets moving. Ramping
+// speed up a step at a time - the same trick the Motor Sweep Test uses -
+// spreads that demand out instead.
+const int rampStepDelayMs = 15;
+
+int leftSpeed = 0;
+int rightSpeed = 0;
+
 void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
@@ -75,18 +85,48 @@ long readDistanceCm() {
   return duration / 29 / 2;
 }
 
+// Moves both motors' PWM speed toward their targets a step at a time,
+// instead of jumping there in one instant.
+void rampTo(int leftTarget, int rightTarget) {
+  while (leftSpeed != leftTarget || rightSpeed != rightTarget) {
+    if (leftSpeed < leftTarget) {
+      leftSpeed = min(leftSpeed + 5, leftTarget);
+    } else if (leftSpeed > leftTarget) {
+      leftSpeed = max(leftSpeed - 5, leftTarget);
+    }
+
+    if (rightSpeed < rightTarget) {
+      rightSpeed = min(rightSpeed + 5, rightTarget);
+    } else if (rightSpeed > rightTarget) {
+      rightSpeed = max(rightSpeed - 5, rightTarget);
+    }
+
+    analogWrite(leftEnablePin, leftSpeed);
+    analogWrite(rightEnablePin, rightSpeed);
+    delay(rampStepDelayMs);
+  }
+}
+
 void driveForward() {
   digitalWrite(leftForwardPin, HIGH);
   digitalWrite(leftBackwardPin, LOW);
   digitalWrite(rightForwardPin, HIGH);
   digitalWrite(rightBackwardPin, LOW);
-  analogWrite(leftEnablePin, motorSpeed);
-  analogWrite(rightEnablePin, motorSpeed);
+  rampTo(motorSpeed, motorSpeed);
 }
 
+// Cuts both motors immediately (no ramp-down needed - only starting from a
+// stop draws enough current to cause trouble) and leaves the direction pins
+// LOW so the next move starts from a clean, fully-stopped state.
 void stopMotors() {
   analogWrite(leftEnablePin, 0);
   analogWrite(rightEnablePin, 0);
+  digitalWrite(leftForwardPin, LOW);
+  digitalWrite(leftBackwardPin, LOW);
+  digitalWrite(rightForwardPin, LOW);
+  digitalWrite(rightBackwardPin, LOW);
+  leftSpeed = 0;
+  rightSpeed = 0;
 }
 
 void turnAway() {
@@ -94,9 +134,9 @@ void turnAway() {
   digitalWrite(leftBackwardPin, LOW);
   digitalWrite(rightForwardPin, LOW);
   digitalWrite(rightBackwardPin, HIGH);
-  analogWrite(leftEnablePin, motorSpeed);
-  analogWrite(rightEnablePin, motorSpeed);
+  rampTo(motorSpeed, motorSpeed);
   delay(400);
+  stopMotors();
 }
 
 void loop() {
