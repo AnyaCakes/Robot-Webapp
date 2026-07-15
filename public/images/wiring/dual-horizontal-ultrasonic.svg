@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 400" width="480" height="400">
+  <rect width="480" height="400" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+
+  <rect x="40" y="160" width="140" height="90" rx="8" fill="#e2e8f0" stroke="#475569" stroke-width="2" />
+  <text x="110" y="210" text-anchor="middle" font-family="monospace" font-size="16" fill="#1e293b">Arduino</text>
+
+  <rect x="300" y="60" width="120" height="65" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2" />
+  <text x="360" y="88" text-anchor="middle" font-family="monospace" font-size="13" fill="#1e3a8a">HC-SR04</text>
+  <text x="360" y="106" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e3a8a">Left Sensor</text>
+
+  <rect x="300" y="280" width="120" height="65" rx="6" fill="#fce7f3" stroke="#be185d" stroke-width="2" />
+  <text x="360" y="308" text-anchor="middle" font-family="monospace" font-size="13" fill="#831843">HC-SR04</text>
+  <text x="360" y="326" text-anchor="middle" font-family="monospace" font-size="11" fill="#831843">Right Sensor</text>
+
+  <text x="365" y="55" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">(faces forward-left)</text>
+  <text x="365" y="360" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">(faces forward-right)</text>
+
+  <line x1="180" y1="190" x2="300" y2="70" stroke="#dc2626" stroke-width="2" />
+  <text x="185" y="150" font-family="monospace" font-size="11" fill="#dc2626">5V -&gt; VCC (left)</text>
+
+  <line x1="180" y1="200" x2="300" y2="85" stroke="#111827" stroke-width="2" />
+  <text x="185" y="168" font-family="monospace" font-size="11" fill="#111827">GND -&gt; GND (left)</text>
+
+  <line x1="180" y1="210" x2="300" y2="100" stroke="#16a34a" stroke-width="2" />
+  <text x="185" y="186" font-family="monospace" font-size="11" fill="#16a34a">Pin 9 -&gt; Trig (left)</text>
+
+  <line x1="180" y1="220" x2="300" y2="115" stroke="#9333ea" stroke-width="2" />
+  <text x="185" y="204" font-family="monospace" font-size="11" fill="#9333ea">Pin 10 -&gt; Echo (left)</text>
+
+  <line x1="180" y1="230" x2="300" y2="290" stroke="#dc2626" stroke-width="2" />
+  <text x="185" y="250" font-family="monospace" font-size="11" fill="#dc2626">5V -&gt; VCC (right)</text>
+
+  <line x1="180" y1="238" x2="300" y2="305" stroke="#111827" stroke-width="2" />
+  <text x="185" y="268" font-family="monospace" font-size="11" fill="#111827">GND -&gt; GND (right)</text>
+
+  <line x1="180" y1="246" x2="300" y2="320" stroke="#ea580c" stroke-width="2" />
+  <text x="185" y="286" font-family="monospace" font-size="11" fill="#ea580c">Pin 4 -&gt; Trig (right)</text>
+
+  <line x1="180" y1="254" x2="300" y2="335" stroke="#2563eb" stroke-width="2" />
+  <text x="185" y="304" font-family="monospace" font-size="11" fill="#2563eb">Pin 6 -&gt; Echo (right)</text>
+
+  <text x="240" y="380" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">
+    Placeholder wiring diagram - replace with a real photo or drawing.
+  </text>
+</svg>

@@ -4,6 +4,7 @@ import { irRemote } from "./ir-remote";
 import { soundSensor } from "./sound-sensor";
 import { dualUltrasonic } from "./dual-ultrasonic";
 import { irLineSensors } from "./ir-line-sensors";
+import { dualHorizontalUltrasonic } from "./dual-horizontal-ultrasonic";
 
 export const sensors: Sensor[] = [
   ultrasonic,
@@ -11,4 +12,5 @@ export const sensors: Sensor[] = [
   soundSensor,
   dualUltrasonic,
   irLineSensors,
+  dualHorizontalUltrasonic,
 ];

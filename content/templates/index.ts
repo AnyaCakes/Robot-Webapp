@@ -4,6 +4,7 @@ import { irRemoteRemoteControl } from "./ir-remote__remote-control";
 import { soundSensorSoundControl } from "./sound-sensor__sound-control";
 import { dualUltrasonicObstacleAvoidance } from "./dual-ultrasonic__obstacle-avoidance";
 import { irLineSensorsLineFollowing } from "./ir-line-sensors__line-following";
+import { dualHorizontalUltrasonicObstacleAvoidance } from "./dual-horizontal-ultrasonic__obstacle-avoidance";
 
 export const templates: CodeTemplate[] = [
   ultrasonicObstacleAvoidance,
@@ -11,4 +12,5 @@ export const templates: CodeTemplate[] = [
   soundSensorSoundControl,
   dualUltrasonicObstacleAvoidance,
   irLineSensorsLineFollowing,
+  dualHorizontalUltrasonicObstacleAvoidance,
 ];
